@@ -5,7 +5,6 @@ import { NutritionCalculator } from "../services/nutritonCaluculator";
 import { FoodEntryModal } from "../components/FoodEntryModal";
 import { DailyViewModal } from "../components/DailyViewModal";
 import { QuickEntryModal } from "../components/QuickEntryModal";
-import { FoodEntry, FoodItem } from "../model";
 export const FOOD_TRACKER_VIEW_TYPE = "food-tracker-view";
 
 export class FoodTrackerView extends ItemView {
@@ -24,7 +23,11 @@ export class FoodTrackerView extends ItemView {
 		this.foodDatabase = foodDatabase;
 		this.dataStorage = dataStorage;
 		this.nutritionCalculator = nutritionCalculator;
-		this.currentDate = new Date().toISOString().split("T")[0];
+		this.currentDate = new Date()
+			.toLocaleDateString("sv-SE", {
+				timeZone: "Asia/Kolkata",
+			})
+			.split("T")[0];
 	}
 
 	getViewType() {
@@ -79,44 +82,6 @@ export class FoodTrackerView extends ItemView {
 		await this.createNutritionGoalsSection(container);
 	}
 
-	private async ensureDummyEntry() {
-		try {
-			const entries = await this.dataStorage.getFoodEntriesForDate(
-				this.currentDate,
-			);
-
-			if (entries.length === 0) {
-				const dummyFood: FoodItem = {
-					id: "dummy_placeholder",
-					name: "Daily Placeholder",
-					category: "Other",
-					servingSize: 1,
-					servingUnit: "serving",
-					nutrition: {
-						calories: 0,
-						protein: 0,
-						carbs: 0,
-						fat: 0,
-					},
-				};
-
-				const dummyEntry: FoodEntry = {
-					id: `dummy_${this.currentDate}`,
-					date: this.currentDate,
-					timestamp: Date.now(),
-					foodItem: dummyFood,
-					quantity: 0,
-					meal: "breakfast",
-					// notes: "Placeholder entry - you can delete this after adding real food",
-				};
-
-				await this.dataStorage.saveFoodEntry(dummyEntry);
-			}
-		} catch (error) {
-			console.warn("Could not create dummy entry:", error);
-		}
-	}
-
 	private createHeaderSection(container: HTMLElement) {
 		const header = container.createDiv("food-tracker-header");
 
@@ -138,7 +103,11 @@ export class FoodTrackerView extends ItemView {
 			cls: "mod-cta",
 		});
 		todayBtn.addEventListener("click", () => {
-			this.currentDate = new Date().toISOString().split("T")[0];
+			this.currentDate = new Date()
+				.toLocaleDateString("sv-SE", {
+					timeZone: "Asia/Kolkata",
+				})
+				.split("T")[0];
 			this.renderView();
 		});
 	}
@@ -245,30 +214,55 @@ export class FoodTrackerView extends ItemView {
 			recentEntries.forEach((entry) => {
 				const entryItem = entriesList.createDiv("entry-item");
 
-				const entryInfo = entryItem.createDiv("entry-info");
-				entryInfo.createEl("span", {
+				const entryContent = entryItem.createDiv("entry-content");
+				const entryMain = entryContent.createDiv("entry-main");
+
+				// Food icon
+				const entryIcon = entryMain.createDiv("entry-icon");
+				entryIcon.textContent = this.getFoodIcon(
+					entry.foodItem.category,
+				);
+
+				// Entry info
+				const entryInfo = entryMain.createDiv("entry-info");
+
+				// Food name
+				entryInfo.createEl("h4", {
 					text: entry.foodItem.name,
 					cls: "food-name",
 				});
-				entryInfo.createEl("span", {
-					text: entry.meal,
-					cls: `meal-tag meal-${entry.meal}`,
+
+				// Entry details container
+				const entryDetails = entryInfo.createDiv("entry-details");
+
+				// Meal tag with icon
+				const mealTag = entryDetails.createDiv(
+					`meal-tag meal-${entry.meal}`,
+				);
+				mealTag.textContent = entry.meal.toUpperCase();
+
+				// Quantity
+				entryDetails.createEl("span", {
+					text: `${entry.quantity} ${entry.foodItem.servingUnit}`,
+					cls: "entry-quantity",
 				});
 
-				const entryStats = entryItem.createDiv("entry-stats");
+				// Entry stats (right side)
+				const entryStats = entryContent.createDiv("entry-stats");
+
+				// Calculate nutrition
 				const multiplier =
 					(entry.quantity * entry.foodItem.servingSize) / 100;
 				const calories = Math.round(
 					entry.foodItem.nutrition.calories * multiplier,
 				);
-				entryStats.createEl("span", {
+
+				entryStats.createEl("div", {
 					text: `${calories} cal`,
-					cls: "calories",
-				});
-				entryStats.createEl("span", {
-					text: `${entry.quantity} ${entry.foodItem.servingUnit}`,
+					cls: "calories-main",
 				});
 
+				// Time
 				const timeStr = new Date(entry.timestamp).toLocaleTimeString(
 					[],
 					{
@@ -276,7 +270,7 @@ export class FoodTrackerView extends ItemView {
 						minute: "2-digit",
 					},
 				);
-				entryItem.createEl("small", {
+				entryStats.createEl("div", {
 					text: timeStr,
 					cls: "entry-time",
 				});
@@ -296,6 +290,21 @@ export class FoodTrackerView extends ItemView {
 		}
 	}
 
+	private getFoodIcon(category: string): string {
+		const icons: { [key: string]: string } = {
+			Fruits: "🍎",
+			Vegetables: "🥕",
+			Grains: "🌾",
+			Protein: "🥩",
+			Dairy: "🥛",
+			Fats: "🥑",
+			Beverages: "🥤",
+			Snacks: "🍿",
+			Other: "🍽️",
+		};
+		return icons[category] || "🍽️";
+	}
+
 	private createQuickActionsSection(container: HTMLElement) {
 		const actionsSection = container.createDiv("quick-actions-section");
 		actionsSection.createEl("h3", { text: "Quick Actions" });
@@ -313,6 +322,7 @@ export class FoodTrackerView extends ItemView {
 				this.foodDatabase,
 				this.dataStorage,
 				() => this.renderView(),
+				this.currentDate,
 			).open();
 		});
 
@@ -458,12 +468,6 @@ export class FoodTrackerView extends ItemView {
 			text: ` (${percentage}%)`,
 			cls: "progress-percentage",
 		});
-	}
-
-	private async addWaterEntry() {
-		// Placeholder for water tracking functionality
-		// This could be expanded to track water intake
-		console.log("Water tracking not yet implemented");
 	}
 
 	async onClose() {

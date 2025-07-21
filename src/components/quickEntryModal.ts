@@ -115,7 +115,11 @@ export class QuickEntryModal extends Modal {
 		// Default to 1 serving for quick entry
 		const entry: FoodEntry = {
 			id: "",
-			date: new Date().toISOString().split("T")[0],
+			date: new Date()
+				.toLocaleDateString("sv-SE", {
+					timeZone: "Asia/Kolkata",
+				})
+				.split("T")[0],
 			timestamp: Date.now(),
 			foodItem: food,
 			quantity: 1,

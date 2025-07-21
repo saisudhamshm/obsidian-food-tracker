@@ -491,6 +491,7 @@ export default class FoodTrackerPlugin extends Plugin {
 				this.refreshViews();
 				this.updateStatusBar();
 			},
+			DateUtils.getCurrentDate(),
 		).open();
 	}
 

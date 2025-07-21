@@ -273,7 +273,7 @@ export class DataStorage {
 		return {
 			entries,
 			summaries,
-			exportDate: moment().toISOString(),
+			exportDate: moment().toLocaleString(),
 			version: this.plugin.manifest.version,
 		};
 	}

@@ -15,7 +15,7 @@ export class DateUtils {
 	 * Get current date in ISO format
 	 */
 	static getCurrentDate(): string {
-		return moment().format("YYYY-MM-DD");
+		return moment().toLocaleString().format("YYYY-MM-DD");
 	}
 
 	/**

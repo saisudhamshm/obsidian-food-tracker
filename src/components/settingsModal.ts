@@ -518,7 +518,9 @@ export class SettingsModal extends Modal {
 			dataSync: {
 				autoBackup: true,
 				backupFrequency: "weekly",
-				lastBackup: new Date().toISOString(),
+				lastBackup: new Date().toLocaleDateString("sv-SE", {
+					timeZone: "Asia/Kolkata",
+				}),
 			},
 		};
 

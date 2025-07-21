@@ -8,6 +8,7 @@ export class FoodEntryModal extends Modal {
 	private foodDatabase: FoodDatabase;
 	private dataStorage: DataStorage;
 	private selectedFood: FoodItem | null = null;
+	private selectedDate: string;
 	private quantity = 1;
 	private meal: "breakfast" | "lunch" | "dinner" | "snack" = "breakfast";
 	// private notes = "";
@@ -18,11 +19,13 @@ export class FoodEntryModal extends Modal {
 		foodDatabase: FoodDatabase,
 		dataStorage: DataStorage,
 		onSubmit: (entry: FoodEntry) => void,
+		selectedDate: string,
 	) {
 		super(app);
 		this.foodDatabase = foodDatabase;
 		this.dataStorage = dataStorage;
 		this.onSubmit = onSubmit;
+		this.selectedDate = selectedDate;
 	}
 
 	onOpen() {
@@ -72,6 +75,7 @@ export class FoodEntryModal extends Modal {
 						this.foodDatabase,
 						this.dataStorage,
 						this.onSubmit,
+						this.selectedDate,
 					).open();
 				}).open();
 			}),
@@ -256,7 +260,7 @@ export class FoodEntryModal extends Modal {
 		try {
 			const entry: FoodEntry = {
 				id: "",
-				date: new Date().toISOString().split("T")[0],
+				date: this.selectedDate,
 				timestamp: Date.now(),
 				foodItem: this.selectedFood,
 				quantity: this.quantity,

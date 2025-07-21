@@ -22,7 +22,13 @@ export class DailyViewModal extends Modal {
 		super(app);
 		this.dataStorage = dataStorage;
 		this.nutritionCalculator = nutritionCalculator;
-		this.selectedDate = date || new Date().toISOString().split("T")[0];
+		this.selectedDate =
+			date ||
+			new Date()
+				.toLocaleDateString("sv-SE", {
+					timeZone: "Asia/Kolkata",
+				})
+				.split("T")[0];
 	}
 
 	async onOpen() {
