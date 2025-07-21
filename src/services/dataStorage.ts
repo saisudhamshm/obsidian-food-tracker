@@ -194,15 +194,38 @@ export class DataStorage {
 	): Promise<DailyNutritionSummary> {
 		const dateKey = this.formatDate(date);
 
-		if (this.summaryCache.has(dateKey)) {
-			return this.summaryCache.get(dateKey)!;
+		try {
+			if (this.summaryCache.has(dateKey)) {
+				return this.summaryCache.get(dateKey)!;
+			}
+
+			const entries = await this.getFoodEntriesForDate(dateKey);
+			const summary = this.calculateDailySummary(dateKey, entries);
+
+			this.summaryCache.set(dateKey, summary);
+			return summary;
+		} catch (error) {
+			console.error(`Error loading summary for ${dateKey}:`, error);
+
+			// Return safe empty summary on error
+			return {
+				date: dateKey,
+				totalCalories: 0,
+				totalProtein: 0,
+				totalCarbs: 0,
+				totalFat: 0,
+				totalFiber: 0,
+				totalSugar: 0,
+				totalSodium: 0,
+				entryCount: 0,
+				mealBreakdown: {
+					breakfast: 0,
+					lunch: 0,
+					dinner: 0,
+					snack: 0,
+				},
+			};
 		}
-
-		const entries = await this.getFoodEntriesForDate(dateKey);
-		const summary = this.calculateDailySummary(dateKey, entries);
-
-		this.summaryCache.set(dateKey, summary);
-		return summary;
 	}
 
 	/**

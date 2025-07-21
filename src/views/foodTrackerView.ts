@@ -64,7 +64,7 @@ export class FoodTrackerView extends ItemView {
 		// Header section
 		this.createHeaderSection(container);
 
-		await this.ensureDummyEntry();
+		// await this.ensureDummyEntry();
 
 		// Quick stats section
 		await this.createQuickStatsSection(container);
