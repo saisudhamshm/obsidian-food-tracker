@@ -1,0 +1,11 @@
+{
+	"id": "food-intake-tracker",
+	"name": "Food Intake Tracker",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Track your daily food intake with comprehensive nutrition analysis, goal setting, and insightful visualizations.",
+	"author": "Silent mist",
+	"authorUrl": "https://github.com/fake",
+	"fundingUrl": "https://buymeacoffee.com/fake",
+	"isDesktopOnly": false
+}
