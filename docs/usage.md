@@ -43,7 +43,7 @@
 ## Tips
 
 - Use command palette: `Cmd/Ctrl+P` → “Food Intake Tracker: …” to jump directly to any view or action.
-![Screenshot of command Palette](images/dashboard-example.png)
+![Screenshot of command Palette](images/commands.png)
 
 - Export daily/weekly summaries to Markdown for journaling.
 - Fully responsive: works on mobile and desktop!

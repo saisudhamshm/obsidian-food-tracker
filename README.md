@@ -9,7 +9,7 @@
 - **Dashboard**: Instantly see today’s stats, entries, and progress.
 - **Multiple views**: Calendar, weekly, and daily overviews
 - **Meal & macro logging**: Track food, calories, protein, carbs, fat, and  water.
-- **Quick entry **: Add foods and drinks  using quick actions.
+- **Quick entry**: Add foods and drinks  using quick actions.
 - **Works offline & private**: All data is stored locally in your vault.
 
 ---
