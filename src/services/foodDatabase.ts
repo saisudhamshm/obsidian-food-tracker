@@ -253,6 +253,7 @@ export class FoodDatabase {
 					fiber: parseFloat(item.fiber) || undefined,
 					sugar: parseFloat(item.sugar || item.sugars) || undefined,
 					sodium: parseFloat(item.sodium) || undefined,
+					water: parseFloat(item.water) || undefined,
 				},
 			};
 		} catch (error) {

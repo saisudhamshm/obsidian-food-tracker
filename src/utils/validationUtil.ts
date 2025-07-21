@@ -118,9 +118,9 @@ export class ValidationUtils {
 			warnings.push("Date is in the future");
 		}
 
-		if (foodEntry.notes && foodEntry.notes.length > 500) {
-			warnings.push("Notes are very long (>500 characters)");
-		}
+		// if (foodEntry.notes && foodEntry.notes.length > 500) {
+		// 	warnings.push("Notes are very long (>500 characters)");
+		// }
 
 		return {
 			isValid: errors.length === 0,

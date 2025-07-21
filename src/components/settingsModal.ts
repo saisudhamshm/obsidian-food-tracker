@@ -290,6 +290,21 @@ export class SettingsModal extends Modal {
 						}
 					}),
 			);
+		new Setting(goalsSection)
+			.setName("Water (ml)")
+			.setDesc("Target daily water intake")
+			.addText((text) =>
+				text
+					.setValue(
+						(this.settings.nutritionGoals.water || 2000).toString(),
+					)
+					.onChange((value) => {
+						const num = parseFloat(value);
+						if (!isNaN(num) && num >= 0) {
+							this.settings.nutritionGoals.water = num;
+						}
+					}),
+			);
 	}
 
 	private createStorageSettingsSection(containerEl: HTMLElement) {

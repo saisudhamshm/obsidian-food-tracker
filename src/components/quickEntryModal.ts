@@ -120,7 +120,7 @@ export class QuickEntryModal extends Modal {
 			foodItem: food,
 			quantity: 1,
 			meal: this.getCurrentMeal(),
-			notes: undefined,
+			// notes: undefined,
 		};
 
 		try {

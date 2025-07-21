@@ -10,7 +10,7 @@ export class FoodEntryModal extends Modal {
 	private selectedFood: FoodItem | null = null;
 	private quantity = 1;
 	private meal: "breakfast" | "lunch" | "dinner" | "snack" = "breakfast";
-	private notes = "";
+	// private notes = "";
 	private onSubmit: (entry: FoodEntry) => void;
 
 	constructor(
@@ -174,14 +174,14 @@ export class FoodEntryModal extends Modal {
 			);
 
 		// Notes
-		new Setting(detailsSection)
-			.setName("Notes")
-			.setDesc("Optional notes about this entry")
-			.addTextArea((text) =>
-				text.setPlaceholder("Add any notes...").onChange((value) => {
-					this.notes = value;
-				}),
-			);
+		// new Setting(detailsSection)
+		// 	.setName("Notes")
+		// 	.setDesc("Optional notes about this entry")
+		// 	.addTextArea((text) =>
+		// 		text.setPlaceholder("Add any notes...").onChange((value) => {
+		// 			this.notes = value;
+		// 		}),
+		// 	);
 
 		// Nutrition preview
 		this.createNutritionPreview(detailsSection);
@@ -261,7 +261,7 @@ export class FoodEntryModal extends Modal {
 				foodItem: this.selectedFood,
 				quantity: this.quantity,
 				meal: this.meal,
-				notes: this.notes || undefined,
+				// 		notes: this.notes || undefined,
 			};
 
 			await this.dataStorage.saveFoodEntry(entry);

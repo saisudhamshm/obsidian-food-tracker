@@ -10,6 +10,7 @@ export interface DailyNutritionSummary {
 	totalFiber: number;
 	totalSugar: number;
 	totalSodium: number;
+	totalWater: number;
 	entryCount: number;
 	mealBreakdown: {
 		breakfast: number;
@@ -217,6 +218,7 @@ export class DataStorage {
 				totalFiber: 0,
 				totalSugar: 0,
 				totalSodium: 0,
+				totalWater: 0,
 				entryCount: 0,
 				mealBreakdown: {
 					breakfast: 0,
@@ -620,7 +622,7 @@ export class DataStorage {
 				content += `- **${entry.foodItem.name}** }\n`;
 				content += `  - Quantity: ${entry.quantity} ${entry.foodItem.servingUnit}\n`;
 				content += `  - Calories: ${calories}\n`;
-				if (entry.notes) content += `  - Notes: ${entry.notes}\n`;
+				// if (entry.notes) content += `  - Notes: ${entry.notes}\n`;
 				content += `\n`;
 			}
 		}
@@ -647,6 +649,7 @@ export class DataStorage {
 			totalFiber: 0,
 			totalSugar: 0,
 			totalSodium: 0,
+			totalWater: 0,
 			entryCount: entries.length,
 			mealBreakdown: {
 				breakfast: 0,
@@ -670,6 +673,7 @@ export class DataStorage {
 			summary.totalFiber += (nutrition.fiber || 0) * multiplier;
 			summary.totalSugar += (nutrition.sugar || 0) * multiplier;
 			summary.totalSodium += (nutrition.sodium || 0) * multiplier;
+			summary.totalWater += (nutrition.water || 0) * multiplier;
 
 			summary.mealBreakdown[entry.meal] += calories;
 		}

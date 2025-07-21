@@ -203,6 +203,7 @@ export class NutritionCalculator {
 				totalFiber: 0,
 				totalSugar: 0,
 				totalSodium: 0,
+				totalWater: 0,
 				entryCount: 0,
 				mealBreakdown: {
 					breakfast: 0,
@@ -226,6 +227,7 @@ export class NutritionCalculator {
 		let totalFiber = 0;
 		let totalSugar = 0;
 		let totalSodium = 0;
+		let totalWater = 0;
 
 		entries.forEach((entry) => {
 			const multiplier = this.getServingMultiplier(entry);
@@ -240,6 +242,7 @@ export class NutritionCalculator {
 			totalFiber += (nutrition.fiber || 0) * multiplier;
 			totalSugar += (nutrition.sugar || 0) * multiplier;
 			totalSodium += (nutrition.sodium || 0) * multiplier;
+			totalWater += (nutrition.water || 0) * multiplier;
 
 			mealBreakdown[entry.meal] += entryCalories;
 		});
@@ -253,6 +256,7 @@ export class NutritionCalculator {
 			totalFiber: Math.round(totalFiber * 10) / 10,
 			totalSugar: Math.round(totalSugar * 10) / 10,
 			totalSodium: Math.round(totalSodium * 10) / 10,
+			totalWater: Math.round(totalWater * 10) / 10,
 			entryCount: entries.length,
 			mealBreakdown: {
 				breakfast: Math.round(mealBreakdown.breakfast),
@@ -294,6 +298,10 @@ export class NutritionCalculator {
 			sodium: this.calculateLimitProgress(
 				summary.totalSodium,
 				goals.sodium || 2300,
+			),
+			water: this.calculateProgress(
+				summary.totalWater,
+				goals.water || 2000,
 			),
 		};
 

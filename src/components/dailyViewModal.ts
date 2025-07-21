@@ -286,12 +286,12 @@ export class DailyViewModal extends Modal {
 				);
 				entryDetails.createEl("span", { text: `${calories} cal` });
 
-				if (entry.notes) {
-					entryDiv.createEl("small", {
-						text: entry.notes,
-						cls: "entry-notes",
-					});
-				}
+				// if (entry.notes) {
+				// 	entryDiv.createEl("small", {
+				// 		text: entry.notes,
+				// 		cls: "entry-notes",
+				// 	});
+				// }
 
 				// Delete button
 				const deleteBtn = entryDiv.createEl("button", {

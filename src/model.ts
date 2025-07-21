@@ -12,6 +12,7 @@ export interface FoodItem {
 		fiber?: number;
 		sugar?: number;
 		sodium?: number;
+		water?: number;
 	};
 }
 
@@ -22,5 +23,5 @@ export interface FoodEntry {
 	foodItem: FoodItem;
 	quantity: number;
 	meal: "breakfast" | "lunch" | "dinner" | "snack";
-	notes?: string;
+	// notes?: string;
 }

@@ -107,7 +107,7 @@ export class FoodTrackerView extends ItemView {
 					foodItem: dummyFood,
 					quantity: 0,
 					meal: "breakfast",
-					notes: "Placeholder entry - you can delete this after adding real food",
+					// notes: "Placeholder entry - you can delete this after adding real food",
 				};
 
 				await this.dataStorage.saveFoodEntry(dummyEntry);
@@ -184,10 +184,20 @@ export class FoodTrackerView extends ItemView {
 			});
 			proteinStat.createEl("div", { text: "Protein", cls: "stat-label" });
 
-			// Water (placeholder)
+			// Water
 			const waterStat = statsGrid.createDiv("stat-item");
-			waterStat.createEl("div", { text: "1.2L", cls: "stat-value" });
+			waterStat.createEl("div", {
+				text: `${summary.totalWater.toFixed(1)}ml`,
+				cls: "stat-value",
+			});
 			waterStat.createEl("div", { text: "Water", cls: "stat-label" });
+			// Fiber
+			const fiberStat = statsGrid.createDiv("stat-item");
+			fiberStat.createEl("div", {
+				text: `${summary.totalFiber.toFixed(1)}g`,
+				cls: "stat-value",
+			});
+			fiberStat.createEl("div", { text: "Fiber", cls: "stat-label" });
 		} catch (error) {
 			statsSection.createEl("p", {
 				text: "Error loading stats: " + error.message,
@@ -332,15 +342,6 @@ export class FoodTrackerView extends ItemView {
 				this.nutritionCalculator,
 				this.currentDate,
 			).open();
-		});
-
-		// Water Tracking
-		const waterBtn = actionsGrid.createEl("button", {
-			text: "💧 Add Water",
-			cls: "action-btn secondary",
-		});
-		waterBtn.addEventListener("click", () => {
-			this.addWaterEntry();
 		});
 	}
 

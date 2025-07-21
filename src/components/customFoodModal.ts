@@ -16,6 +16,7 @@ export class CustomFoodModal extends Modal {
 			protein: 0,
 			carbs: 0,
 			fat: 0,
+			water: 0,
 			fiber: 0,
 			sugar: 0,
 			sodium: 0,
@@ -190,6 +191,14 @@ export class CustomFoodModal extends Modal {
 					!isNaN(num) && num >= 0 ? num : undefined;
 			}),
 		);
+		// Water
+		new Setting(optionalSection).setName("Water (ml)").addText((text) =>
+			text.setPlaceholder("0").onChange((value) => {
+				const num = parseFloat(value);
+				this.foodData.nutrition!.water =
+					!isNaN(num) && num >= 0 ? num : undefined;
+			}),
+		);
 	}
 
 	private createActionButtons(containerEl: HTMLElement) {
@@ -245,6 +254,7 @@ export class CustomFoodModal extends Modal {
 					fiber: this.foodData.nutrition.fiber,
 					sugar: this.foodData.nutrition.sugar,
 					sodium: this.foodData.nutrition.sodium,
+					water: this.foodData.nutrition.water,
 				},
 			};
 

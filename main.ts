@@ -73,10 +73,10 @@ const DEFAULT_SETTINGS: FoodTrackerSettings = {
 		protein: 150,
 		carbs: 250,
 		fat: 65,
+		water: 3000,
 		fiber: 25,
 		sugar: 50,
 		sodium: 2300,
-		water: 2000,
 	},
 	storageSettings: {
 		// Add this section
