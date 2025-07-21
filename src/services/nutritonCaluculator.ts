@@ -76,6 +76,12 @@ export interface NutritionAnalysis {
 			percentage: number;
 			status: "under" | "over" | "met";
 		};
+		water: {
+			current: number;
+			target: number;
+			percentage: number;
+			remaining: number;
+		};
 	};
 	macroBreakdown: MacroBreakdown;
 	recommendations: string[];

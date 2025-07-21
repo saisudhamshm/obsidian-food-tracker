@@ -399,6 +399,15 @@ export class FoodTrackerView extends ItemView {
 				analysis.progress.fat.percentage,
 				"g",
 			);
+			//Water
+			this.createProgressBar(
+				progressGrid,
+				"Water",
+				analysis.progress.water.current,
+				analysis.progress.water.target,
+				analysis.progress.water.percentage,
+				"ml",
+			);
 
 			// Show recommendations if any
 			if (analysis.recommendations.length > 0) {

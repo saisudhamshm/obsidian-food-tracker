@@ -390,14 +390,6 @@ export default class FoodTrackerPlugin extends Plugin {
 			icon: "upload",
 			callback: () => this.importData(),
 		});
-
-		// Quick water entry
-		this.addCommand({
-			id: "add-water",
-			name: "Add Water Intake",
-			icon: "droplets",
-			callback: () => this.addWaterEntry(),
-		});
 	}
 
 	// Ribbon Icons
