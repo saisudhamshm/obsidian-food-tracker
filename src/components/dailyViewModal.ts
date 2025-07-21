@@ -227,10 +227,14 @@ export class DailyViewModal extends Modal {
 			{ name: "Snacks", calories: mealBreakdown.snack, key: "snack" },
 		];
 
+		const mealGrid = mealSection.createDiv("meal-grid");
+
 		meals.forEach((meal) => {
-			const mealDiv = mealSection.createDiv("meal-item");
-			mealDiv.createEl("span", { text: meal.name, cls: "meal-name" });
-			mealDiv.createEl("span", {
+			const mealDiv = mealGrid.createDiv("meal-item");
+
+			const mealInfo = mealDiv.createDiv("meal-info");
+			mealInfo.createEl("span", { text: meal.name, cls: "meal-name" });
+			mealInfo.createEl("span", {
 				text: `${meal.calories} cal`,
 				cls: "meal-calories",
 			});
